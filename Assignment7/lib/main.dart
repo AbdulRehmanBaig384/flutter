@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
           onPrimary: Colors.white,
         ),
         textTheme: ThemeData.dark().textTheme.apply(
-              bodyColor: Colors.white,
-              displayColor: Colors.white,
-            ),
+          bodyColor: Colors.white,
+          displayColor: Colors.white,
+        ),
       ),
       home: const DestinationProfilePage(),
     );
@@ -94,10 +94,7 @@ class _HeroSection extends StatelessWidget {
               Positioned(
                 top: 16,
                 left: 16,
-                child: _RoundIconButton(
-                  icon: Icons.arrow_back,
-                  onTap: () {},
-                ),
+                child: _RoundIconButton(icon: Icons.arrow_back, onTap: () {}),
               ),
               Positioned(
                 top: 16,
@@ -206,10 +203,7 @@ class _OverviewSection extends StatelessWidget {
               SizedBox(width: 8),
               Text(
                 'South Tyrol, Italy',
-                style: TextStyle(
-                  color: Color(0xFF7E95B7),
-                  fontSize: 14,
-                ),
+                style: TextStyle(color: Color(0xFF7E95B7), fontSize: 14),
               ),
             ],
           ),
@@ -229,6 +223,7 @@ class _OverviewSection extends StatelessWidget {
                 'Book Now',
                 style: TextStyle(
                   fontSize: 16,
+                  color: Colors.white,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -257,10 +252,7 @@ class _RoundIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
 
-  const _RoundIconButton({
-    required this.icon,
-    required this.onTap,
-  });
+  const _RoundIconButton({required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -317,10 +309,7 @@ class _InfoCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               description,
-              style: const TextStyle(
-                color: Color(0xFF7E95B7),
-                fontSize: 12,
-              ),
+              style: const TextStyle(color: Color(0xFF7E95B7), fontSize: 12),
             ),
           ],
         ),
