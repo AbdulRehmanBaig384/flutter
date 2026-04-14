@@ -15,12 +15,12 @@ class _ProfileScreenState extends State<ProfileScreen>
   final _formKey = GlobalKey<FormState>();
 
   // Form controllers
-  final _nameController = TextEditingController(text: 'Alex Harrison');
-  final _studentIdController = TextEditingController(text: 'UB-9283471');
+  final _nameController = TextEditingController(text: 'Abdul Rehman');
+  final _studentIdController = TextEditingController(text: 'B23110106044');
 
   // State values
   String? _selectedDepartment = 'Computer Science & Engineering';
-  String _selectedGender = 'Female';
+  String _selectedGender = 'Male';
 
   @override
   void initState() {
@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
                 const SizedBox(height: 6),
                 const Text(
-                  'Alex Harrison',
+                  'Abdul Rehman',
                   style: TextStyle(
                     color: AppTheme.textDark,
                     fontSize: 28,
@@ -325,8 +325,9 @@ class _PersonalInfoTab extends StatelessWidget {
                   const SizedBox(height: 8),
                   TextFormField(
                     controller: studentIdController,
-                    validator: (v) =>
-                        v == null || v.isEmpty ? 'Student ID is required' : null,
+                    validator: (v) => v == null || v.isEmpty
+                        ? 'Student ID is required'
+                        : null,
                     decoration: const InputDecoration(
                       hintText: 'Enter your student ID',
                     ),
@@ -480,8 +481,7 @@ class _PersonalInfoTab extends StatelessWidget {
                       child: const LinearProgressIndicator(
                         value: 0.85,
                         backgroundColor: Colors.white24,
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.white),
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                         minHeight: 6,
                       ),
                     ),

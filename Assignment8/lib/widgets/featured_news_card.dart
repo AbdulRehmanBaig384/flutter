@@ -32,7 +32,11 @@ class FeaturedNewsCard extends StatelessWidget {
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
                 ),
-                child: Image.asset("assets/images/building.png")
+                child: Image.asset(
+                  "assets/images/home1.png",
+                  width: double.infinity, // stretch full card width
+                  fit: BoxFit.cover,
+                ),
               ),
               // Featured Badge - Positioned
               Positioned(
@@ -118,7 +122,8 @@ class _BuildingPainter extends CustomPainter {
 
     // Main building
     canvas.drawRect(
-      Rect.fromLTWH(size.width * 0.15, size.height * 0.25, size.width * 0.5, size.height * 0.75),
+      Rect.fromLTWH(size.width * 0.15, size.height * 0.25, size.width * 0.5,
+          size.height * 0.75),
       paint,
     );
 
@@ -141,7 +146,8 @@ class _BuildingPainter extends CustomPainter {
     // Side building
     final sidePaint = Paint()..color = const Color(0xFF3D6B85);
     canvas.drawRect(
-      Rect.fromLTWH(size.width * 0.68, size.height * 0.40, size.width * 0.25, size.height * 0.60),
+      Rect.fromLTWH(size.width * 0.68, size.height * 0.40, size.width * 0.25,
+          size.height * 0.60),
       sidePaint,
     );
   }

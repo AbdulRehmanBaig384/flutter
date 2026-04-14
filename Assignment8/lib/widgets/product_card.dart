@@ -7,39 +7,20 @@ class ProductCard extends StatelessWidget {
 
   const ProductCard({super.key, required this.product});
 
-  Color _getImageColor(String imageUrl) {
-    switch (imageUrl) {
-      case 'books':
-        return const Color(0xFF6B7280);
-      case 'laptop':
-        return const Color(0xFFE5E7EB);
-      case 'books2':
-        return const Color(0xFF78716C);
-      case 'keyboard':
-        return const Color(0xFF1F2937);
-      case 'watch':
-        return const Color(0xFFD1D5DB);
-      case 'calculator':
-        return const Color(0xFFF3F4F6);
-      default:
-        return const Color(0xFF9CA3AF);
-    }
-  }
-
   String _getImageURL(String imageUrl) {
     switch (imageUrl) {
       case 'books':
-        return "market1.jpg";
+        return "image1.jpg";
       case 'books2':
-        return "books.jpg";
+        return "image2.jpg";
       case 'laptop':
-        return "laptop.jpg";
+        return "image3.jpg";
       case 'keyboard':
-        return "market4.jpg";
+        return "image4.jpg";
       case 'watch':
-        return "market5.jpg";
+        return "image5.jpg";
       case 'calculator':
-        return "market6.jpg";
+        return "image6.jpg";
       default:
         return "";
     }
@@ -72,7 +53,11 @@ class ProductCard extends StatelessWidget {
                   topRight: Radius.circular(14),
                 ),
                 child: Image.asset(
-                    "assets/images/${_getImageURL(product.imageUrl)}", fit: BoxFit.cover,),
+                  "assets/images/${_getImageURL(product.imageUrl)}",
+                  fit: BoxFit.cover,
+                  height: 140,
+                  width: double.infinity,
+                ),
               ),
               // Price badge - Positioned on top right corner
               Positioned(
