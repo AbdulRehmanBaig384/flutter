@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
 
             // Welcome Header
             const Text(
-              'Welcome, Abdul',
+              'Welcome, Abdul Rehman',
               style: TextStyle(
                 color: AppTheme.textDark,
                 fontSize: 28,

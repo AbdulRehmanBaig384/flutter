@@ -16,7 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   // Form controllers
   final _nameController = TextEditingController(text: 'Abdul Rehman');
-  final _studentIdController = TextEditingController(text: 'B23110106044');
+  final _studentIdController = TextEditingController(text: 'B23110106004');
 
   // State values
   String? _selectedDepartment = 'Computer Science & Engineering';
