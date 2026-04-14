@@ -1,4 +1,4 @@
-package com.example.assignment8.assignment8
+package com.example.ubit_student_hub
 
 import io.flutter.embedding.android.FlutterActivity
 

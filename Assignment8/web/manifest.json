@@ -1,6 +1,6 @@
 {
-    "name": "assignment8",
-    "short_name": "assignment8",
+    "name": "ubit_student_hub",
+    "short_name": "ubit_student_hub",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

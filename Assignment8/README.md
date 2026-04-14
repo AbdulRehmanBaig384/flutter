@@ -1,4 +1,4 @@
-# assignment8
+# ubit_student_hub
 
 A new Flutter project.
 

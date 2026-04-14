@@ -1,93 +1,166 @@
 import 'package:flutter/material.dart';
-import '../models/mock_data.dart';
-import '../widgets/news_card.dart';
+import '../theme/app_theme.dart';
+import '../data/mock_data.dart';
+import '../models/models.dart';
+import '../widgets/featured_news_card.dart';
+import '../widgets/news_list_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Welcome, Jordan', style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w800)),
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: Color(0xFF1D4ED8),
-                child: Text('JD', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.backgroundGrey,
+        leading: Builder(
+          builder: (ctx) => IconButton(
+            icon: const Icon(Icons.menu, color: AppTheme.primaryBlue),
+            onPressed: () => Scaffold.of(ctx).openDrawer(),
+          ),
+        ),
+        title: const Text(
+          'UBIT Hub',
+          style: TextStyle(
+            color: AppTheme.primaryBlue,
+            fontWeight: FontWeight.w700,
+            fontSize: 18,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, color: AppTheme.primaryBlue),
+            onPressed: () {},
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: CircleAvatar(
+              radius: 18,
+              backgroundColor: AppTheme.primaryBlue,
+              child: const Text(
+                'S',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ],
+            ),
           ),
-          const SizedBox(height: 8),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Your academic architect dashboard is ready.', style: TextStyle(color: Color(0xFF94A3B8))),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              _StatusCard(title: 'Current GPA', value: '3.82'),
-              const SizedBox(width: 12),
-              _StatusCard(title: 'Next Class', value: 'CS 401', subtitle: '10:30 AM · Hall B'),
-            ],
-          ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Campus News', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)),
-              Text('View All', style: TextStyle(color: Color(0xFF60A5FA), fontWeight: FontWeight.w600)),
-            ],
-          ),
-          const SizedBox(height: 14),
-          _FeaturedNewsCard(item: campusNews.first),
-          const SizedBox(height: 18),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: campusNews.length - 1,
-            itemBuilder: (context, index) {
-              final item = campusNews[index + 1];
-              return NewsCard(item: item);
-            },
-          ),
-          const SizedBox(height: 88),
         ],
       ),
-    );
-  }
-}
-
-class _StatusCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final String? subtitle;
-
-  const _StatusCard({required this.title, required this.value, this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: const Color(0xFF111827),
-          borderRadius: BorderRadius.circular(18),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: AppTheme.primaryBlue,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12)),
+            const SizedBox(height: 20),
+
+            // Welcome Header
+            const Text(
+              'Welcome, Jordan',
+              style: TextStyle(
+                color: AppTheme.textDark,
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'Your academic architect dashboard is ready.',
+              style: TextStyle(
+                color: AppTheme.textMedium,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Status Cards Row
+            Row(
+              children: [
+                Expanded(child: _GpaCard()),
+                const SizedBox(width: 16),
+                Expanded(child: _NextClassCard()),
+              ],
+            ),
+            const SizedBox(height: 28),
+
+            // Campus News Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Campus News',
+                  style: TextStyle(
+                    color: AppTheme.textDark,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'View All',
+                    style: TextStyle(
+                      color: AppTheme.primaryBlue,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 12),
-            Text(value, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w800)),
-            if (subtitle != null) ...[
-              const SizedBox(height: 8),
-              Text(subtitle!, style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12)),
-            ]
+
+            // Featured News Card
+            const FeaturedNewsCard(
+              news: NewsItem(
+                id: '1',
+                title: 'New Research Grant Awarded to Engineering Faculty',
+                category: 'ACADEMIC',
+                description:
+                    'The \$2.4M grant will fund sustainable energy initiatives across the campus for t...',
+                imageUrl: 'building',
+                isFeatured: true,
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // News List Items
+            Container(
+              decoration: BoxDecoration(
+                color: AppTheme.cardWhite,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 12,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: mockNews.skip(1).length,
+                separatorBuilder: (_, __) => const Divider(
+                  height: 1,
+                  indent: 16,
+                  endIndent: 16,
+                  color: AppTheme.borderColor,
+                ),
+                itemBuilder: (ctx, i) {
+                  final news = mockNews.skip(1).toList()[i];
+                  return NewsListItem(news: news);
+                },
+              ),
+            ),
+            const SizedBox(height: 32),
           ],
         ),
       ),
@@ -95,58 +168,96 @@ class _StatusCard extends StatelessWidget {
   }
 }
 
-class _FeaturedNewsCard extends StatelessWidget {
-  final dynamic item;
-
-  const _FeaturedNewsCard({required this.item});
-
+class _GpaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 220,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            image: DecorationImage(image: NetworkImage(item.imageUrl), fit: BoxFit.cover),
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.cardWhite,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 2),
           ),
-        ),
-        Container(
-          height: 220,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Color(0xCC0F172A)],
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'CURRENT GPA',
+            style: TextStyle(
+              color: AppTheme.textMedium,
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
             ),
           ),
-        ),
-        Positioned(
-          left: 16,
-          right: 16,
-          bottom: 16,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1D4ED8),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Text(item.tag, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700)),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                item.title,
-                style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800),
-              ),
-            ],
+          const SizedBox(height: 10),
+          const Text(
+            '3.82',
+            style: TextStyle(
+              color: AppTheme.primaryBlue,
+              fontSize: 30,
+              fontWeight: FontWeight.w800,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+}
+
+class _NextClassCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.primaryBlue,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.primaryBlue.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'NEXT CLASS',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'CS 401',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 4),
+          const Text(
+            '10:30 AM • Hall B',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
